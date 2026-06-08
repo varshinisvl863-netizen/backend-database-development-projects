@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flask REST API</title>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, sans-serif;
+    }
+
+    body{
+        background:#f4f4f4;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+    }
+
+    .container{
+        background:#fff;
+        padding:30px;
+        width:400px;
+        border-radius:10px;
+        box-shadow:0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+    }
+
+    input{
+        width:100%;
+        padding:12px;
+        margin:10px 0;
+        border:1px solid #ccc;
+        border-radius:5px;
+    }
+
+    button{
+        width:100%;
+        padding:12px;
+        background:#007bff;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#0056b3;
+    }
+
+    #response{
+        margin-top:20px;
+        padding:10px;
+        background:#f8f9fa;
+        border-radius:5px;
+        min-height:50px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Flask REST API Client</h2>
+
+    <input type="text" id="name" placeholder="Enter Name">
+
+    <button onclick="sendData()">Submit</button>
+
+    <div id="response"></div>
+</div>
+
+<script>
+function sendData(){
+
+    const name = document.getElementById("name").value;
+
+    fetch("http://127.0.0.1:5000/api/user", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("response").innerHTML =
+        "<strong>Response:</strong> " + JSON.stringify(data);
+    })
+    .catch(error => {
+        document.getElementById("response").innerHTML =
+        "Error connecting to API";
+    });
+
+}
+</script>
+
+</body>
+</html>
